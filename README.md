@@ -211,10 +211,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-## 👨‍� **Author & Contact**
+## 👨‍💻 **Author & Contact**
 - **GitHub**: [@nickja054](https://github.com/nickja054)
 - **Project**: [ProjectFitness-1](https://github.com/nickja054/ProjectFitness-1)
 - **Email**: nickja054@gmail.com
+- **Email**: benz.narongrit01@gmail.com
 
 ---
 
@@ -225,5 +226,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**เรียบเรียงและพัฒนาโดย: Patipan (nickja054)**
+**เรียบเรียงและพัฒนาโดย: Patipan (nickja054) & Narongrit**
 
