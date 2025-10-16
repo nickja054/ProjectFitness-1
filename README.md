@@ -4,7 +4,7 @@
 
 ---
 
-#จัดทำพัฒนาโดย: Patipan Boonchu เเละ Narongrit Keereepluek **
+# จัดทำพัฒนาโดย: Patipan Boonchu เเละ Narongrit Keereepluek
 
 ---
 
