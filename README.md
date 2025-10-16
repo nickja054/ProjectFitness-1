@@ -123,7 +123,7 @@ const char* serverURL = "http://localhost:5000"; // หรือ Vercel URL
 ---
 
 ## 🌍 **Live Demo**
-🔗 **Frontend**: [https://project-fitness-1-ckx45miup-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-ckx45miup-patipans-projects-5a33366c.vercel.app)  
+🔗 **Frontend**: [https://project-fitness-1.vercel.app](https://project-fitness-1.vercel.app)  
 🔗 **Backend API**: [https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app)  
 
 ---
@@ -133,10 +133,7 @@ const char* serverURL = "http://localhost:5000"; // หรือ Vercel URL
 
 ---
 
-## 📋 **Sheet Project**
-🔗 **Drive**: https://drive.google.com/drive/folders/1K1gvBI2GTTUL_uOIwUzPVk1UCJIJEBCX?usp=sharing
-
----
+## � **Screenshots**
 
 ## 📱 **Screenshots**
 
