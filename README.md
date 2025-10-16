@@ -212,10 +212,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 ## 👨‍💻 **Author & Contact**
-- **GitHub**: [@nickja054](https://github.com/nickja054)
+- **GitHub**: [Patipan Boonchu](https://github.com/nickja054)
 - **Project**: [ProjectFitness-1](https://github.com/nickja054/ProjectFitness-1)
-- **Email**: nickja054@gmail.com
-- **Email**: benz.narongrit01@gmail.com
+- **Email**: nickja054@gmail.com (Patipan Boonchu)
+- **Email**: benz.narongrit01@gmail.com (Narongrit Keereepluek )
 
 ---
 
