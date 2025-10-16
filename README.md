@@ -94,5 +94,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 ## 💬 **Contact**
+📧 Email: nickja054@gmail.com
 📧 Email: benz.narongrit01@gmail.com
 
