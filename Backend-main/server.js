@@ -9,7 +9,21 @@ var jwt = require('jsonwebtoken');
 var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
 const secret = 'Adlog'
 
-app.use(cors());
+// CORS Configuration
+const corsOptions = {
+    origin: [
+        'http://localhost:3000',
+        'http://localhost:3001', 
+        'http://localhost:3002',
+        'https://project-fitness-1-o44wi6a1n-patipans-projects-5a33366c.vercel.app',
+        'https://project-fitness-1.vercel.app'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -23,13 +37,11 @@ const dbConfig = {
     password: process.env.DB_PASSWORD || 'root',
     database: process.env.DB_NAME || 'gym_management',
     port: process.env.DB_PORT || 3306,
-    // เพิ่ม timeout และ retry config สำหรับ cloud database
-    connectTimeout: 60000,
-    acquireTimeout: 60000,
-    reconnect: true
+    // เพิ่ม timeout config สำหรับ MySQL
+    connectTimeout: 60000
 };
 
-console.log('🔗 Connecting to database:', {
+console.log('🔗 Connecting to MySQL database:', {
     host: dbConfig.host,
     user: dbConfig.user,
     database: dbConfig.database,
@@ -37,6 +49,26 @@ console.log('🔗 Connecting to database:', {
 });
 
 const db = mysql.createConnection(dbConfig);
+
+// เชื่อมต่อ database
+db.connect((err) => {
+    if (err) {
+        console.error('❌ Error connecting to MySQL database:', err);
+        global.dbConnected = false;
+    } else {
+        console.log('✅ Connected to MySQL database successfully');
+        global.dbConnected = true;
+    }
+});
+
+// Handle database disconnection
+db.on('error', (err) => {
+    console.error('❌ Database error:', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        console.log('🔄 Attempting to reconnect to database...');
+        db.connect();
+    }
+});
 
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
@@ -65,15 +97,13 @@ if (process.env.NODE_ENV !== 'production') {
     });
 
     serialPort.on('error', (err) => {
-      console.log("⚠️  Serial Port error:", err.message);
-      console.log("   Running in demo mode - fingerprint features will be disabled");
+      // Silent error handling - fingerprint scanner not required
       serialPort = null;
       parser = null;
     });
 
   } catch (error) {
-    console.log("⚠️  Serial Port not available, running in demo mode");
-    console.log("   Fingerprint features will be disabled");
+    // Silent error handling - fingerprint scanner not required
     serialPort = null;
     parser = null;
   }
