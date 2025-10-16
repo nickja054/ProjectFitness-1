@@ -123,8 +123,8 @@ const char* serverURL = "http://localhost:5000"; // หรือ Vercel URL
 ---
 
 ## 🌍 **Live Demo**
-🔗 **Frontend**: [https://project-fitness-1-i1aqtazre-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-i1aqtazre-patipans-projects-5a33366c.vercel.app)  
-🔗 **Backend API**: [https://project-fitness-1-naajz5bqv-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-naajz5bqv-patipans-projects-5a33366c.vercel.app)  
+🔗 **Frontend**: [https://project-fitness-1-23rqcn3u6-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-23rqcn3u6-patipans-projects-5a33366c.vercel.app)  
+🔗 **Backend API**: [https://project-fitness-1-cb0s599ns-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-cb0s599ns-patipans-projects-5a33366c.vercel.app)  
 
 ---
 
@@ -197,7 +197,7 @@ JWT_SECRET=your-jwt-secret
 NODE_ENV=production
 
 # Frontend (Vercel Environment Variables)
-REACT_APP_API_URL=https://project-fitness-1-naajz5bqv-patipans-projects-5a33366c.vercel.app
+REACT_APP_API_URL=https://project-fitness-1-cb0s599ns-patipans-projects-5a33366c.vercel.app
 ```
 
 **หมายเหตุ**: Backend และ Frontend ถูก deploy แยกกันใน Vercel projects ที่ต่างกัน
