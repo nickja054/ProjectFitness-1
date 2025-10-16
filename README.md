@@ -226,5 +226,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**เรียบเรียงและพัฒนาโดย: Patipan (nickja054) & Narongrit**
+**จัดทำพัฒนาโดย: Patipan & Narongrit**
 
