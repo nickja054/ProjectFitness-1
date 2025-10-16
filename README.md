@@ -123,8 +123,13 @@ const char* serverURL = "http://localhost:5000"; // หรือ Vercel URL
 ---
 
 ## 🌍 **Live Demo**
-🔗 **Frontend**: [https://project-fitness-1-23rqcn3u6-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-23rqcn3u6-patipans-projects-5a33366c.vercel.app)  
-🔗 **Backend API**: [https://project-fitness-1-cb0s599ns-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-cb0s599ns-patipans-projects-5a33366c.vercel.app)  
+🔗 **Frontend**: [https://project-fitness-1-ckx45miup-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-ckx45miup-patipans-projects-5a33366c.vercel.app)  
+🔗 **Backend API**: [https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app)  
+
+---
+
+## 📋 **Sheet Project**
+🔗 **Drive**: https://drive.google.com/drive/folders/1K1gvBI2GTTUL_uOIwUzPVk1UCJIJEBCX?usp=sharing
 
 ---
 
@@ -197,7 +202,7 @@ JWT_SECRET=your-jwt-secret
 NODE_ENV=production
 
 # Frontend (Vercel Environment Variables)
-REACT_APP_API_URL=https://project-fitness-1-cb0s599ns-patipans-projects-5a33366c.vercel.app
+REACT_APP_API_URL=https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app
 ```
 
 **หมายเหตุ**: Backend และ Frontend ถูก deploy แยกกันใน Vercel projects ที่ต่างกัน
@@ -222,7 +227,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 - **GitHub**: [Patipan Boonchu](https://github.com/nickja054)
 - **Project**: [ProjectFitness-1](https://github.com/nickja054/ProjectFitness-1)
 - **Email**: nickja054@gmail.com (Patipan Boonchu)
-- **Email**: benz.narongrit01@gmail.com (Narongrit Keereepluek )
+- **Email**: benz.narongrit01@gmail.com (Narongrit Keereepluek)
 
 ---
 
