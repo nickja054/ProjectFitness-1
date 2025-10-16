@@ -4,6 +4,10 @@
 
 ---
 
+## จัดทำพัฒนาโดย: Patipan Boonchu เเละ Narongrit Keereepluek
+
+---
+
 ## 🎯 **Features**
 ✅ **ระบบสมาชิกอัจฉริยะ** - จัดการสมาชิกแบบออนไลน์ เชื่อมต่อกับฐานข้อมูล MySQL/SQLite  
 ✅ **สแกนลายนิ้วมือ (Fingerprint)** - ใช้เซ็นเซอร์ AS608 และ ESP8266/ESP32 สำหรับระบุตัวตนสมาชิก  
@@ -119,8 +123,8 @@ const char* serverURL = "http://localhost:5000"; // หรือ Vercel URL
 ---
 
 ## 🌍 **Live Demo**
-🔗 **Frontend**: [ProjectFitness-1 Dashboard](https://project-fitness-1-frontend.vercel.app/)  
-🔗 **Backend API**: [ProjectFitness-1 API](https://project-fitness-1-backend.vercel.app/)  
+🔗 **Frontend**: [https://project-fitness-1-i1aqtazre-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-i1aqtazre-patipans-projects-5a33366c.vercel.app)  
+🔗 **Backend API**: [https://project-fitness-1-naajz5bqv-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-naajz5bqv-patipans-projects-5a33366c.vercel.app)  
 
 ---
 
@@ -175,25 +179,28 @@ npm i -g vercel
 
 # Deploy Backend
 cd Backend-main
-vercel
+vercel --prod
 
 # Deploy Frontend  
 cd Frontend-main
-vercel
+vercel --prod
 ```
 
 ### Environment Variables สำหรับ Production
 ```env
-# Backend (Vercel)
+# Backend (Vercel Environment Variables)
 DB_HOST=your-cloud-database-host
 DB_USER=your-username  
 DB_PASSWORD=your-password
 DB_NAME=gym_management
+JWT_SECRET=your-jwt-secret
 NODE_ENV=production
 
-# Frontend (.env)
-REACT_APP_API_URL=https://your-backend.vercel.app
+# Frontend (Vercel Environment Variables)
+REACT_APP_API_URL=https://project-fitness-1-naajz5bqv-patipans-projects-5a33366c.vercel.app
 ```
+
+**หมายเหตุ**: Backend และ Frontend ถูก deploy แยกกันใน Vercel projects ที่ต่างกัน
 
 ---
 
@@ -212,10 +219,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 ## 👨‍💻 **Author & Contact**
-- **GitHub**: [@nickja054](https://github.com/nickja054)
+- **GitHub**: [Patipan Boonchu](https://github.com/nickja054)
 - **Project**: [ProjectFitness-1](https://github.com/nickja054/ProjectFitness-1)
-- **Email**: nickja054@gmail.com
-- **Email**: benz.narongrit01@gmail.com
+- **Email**: nickja054@gmail.com (Patipan Boonchu)
+- **Email**: benz.narongrit01@gmail.com (Narongrit Keereepluek )
 
 ---
 
@@ -226,5 +233,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**เรียบเรียงและพัฒนาโดย: Patipan (nickja054) & Narongrit**
 

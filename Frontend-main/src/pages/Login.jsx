@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate, useLocation } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
+import { API_BASE_URL } from '../utils/api';
 
 function Copyright(props) {
   return (
@@ -47,7 +48,7 @@ const handleSubmit = (event) => {
     Password: data.get('password'),
   };
 
-  fetch('http://localhost:5000/api/login', {
+  fetch(`${API_BASE_URL}/api/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

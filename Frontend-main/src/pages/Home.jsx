@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../utils/api';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -29,7 +30,7 @@ function Home() {
   const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/members').then((response) => {
+    axios.get(`${API_BASE_URL}/api/members`).then((response) => {
       console.log(response.data);
       setMembers(response.data);
     });

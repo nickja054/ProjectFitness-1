@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LoginIcon from '@mui/icons-material/Login';
+import { API_BASE_URL } from '../utils/api';
 
 function Copyright(props) {
   return (
@@ -45,7 +46,7 @@ export default function SignUp() {
       fname: data.get('firstName'),
       lname: data.get('lastName'),
     }
-    fetch('http://localhost:5000/api/Register', {
+    fetch(`${API_BASE_URL}/api/Register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
