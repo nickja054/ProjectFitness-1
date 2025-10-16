@@ -1,6 +1,7 @@
-# ProjectFitness-1 - Smart Fitness Management System
+# ProjectFitness-1 - Fitness Membership Management and Access Control System with IoT
+- ระบบจัดการสมาชิกฟิตเนสและควบคุมการเข้าใช้งานด้วย IoT
 
-🚀 **ProjectFitness-1** เป็นระบบจัดการฟิตเนสอัจฉริยะที่รวม **Software** และ **Hardware** เพื่อให้การจัดการสมาชิกและอุปกรณ์ออกกำลังกายเป็นเรื่องง่ายและทันสมัย
+🚀 **ProjectFitness-1** เป็นระบบจัดการฟิตเนสอัจฉริยะที่รวม **Software** และ **Hardware** เพื่อให้การจัดการสมาชิกฟิตเนสได้สะดวก
 
 ---
 
@@ -124,7 +125,7 @@ const char* serverURL = "http://localhost:5000"; // หรือ Vercel URL
 
 ## 🌍 **Live Demo**
 🔗 **Frontend**: [https://project-fitness-1.vercel.app](https://project-fitness-1.vercel.app)  
-🔗 **Backend API**: [https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app)  
+🔗 **Backend API**: [https://project-fitness-1-179fhk1n1-patipans-projects-5a33366c.vercel.app](https://project-fitness-1-179fhk1n1-patipans-projects-5a33366c.vercel.app)  
 
 ---
 
@@ -132,8 +133,6 @@ const char* serverURL = "http://localhost:5000"; // หรือ Vercel URL
 🔗 **Drive**: https://drive.google.com/drive/folders/1K1gvBI2GTTUL_uOIwUzPVk1UCJIJEBCX?usp=sharing
 
 ---
-
-## � **Screenshots**
 
 ## 📱 **Screenshots**
 
@@ -204,7 +203,7 @@ JWT_SECRET=your-jwt-secret
 NODE_ENV=production
 
 # Frontend (Vercel Environment Variables)
-REACT_APP_API_URL=https://project-fitness-1-nkuh2omta-patipans-projects-5a33366c.vercel.app
+REACT_APP_API_URL=https://project-fitness-1-179fhk1n1-patipans-projects-5a33366c.vercel.app
 ```
 
 **หมายเหตุ**: Backend และ Frontend ถูก deploy แยกกันใน Vercel projects ที่ต่างกัน
