@@ -47,7 +47,7 @@ const handleSubmit = (event) => {
     Password: data.get('password'),
   };
 
-  fetch('http://localhost:5000/api/login', {
+  fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

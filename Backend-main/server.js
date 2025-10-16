@@ -17,13 +17,26 @@ require('dotenv').config();
 const mysql = require('mysql2');
 
 // ใช้ environment variables สำหรับ production
-const db = mysql.createConnection({
+const dbConfig = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || 'root',
     database: process.env.DB_NAME || 'gym_management',
-    port: process.env.DB_PORT || 3306
+    port: process.env.DB_PORT || 3306,
+    // เพิ่ม timeout และ retry config สำหรับ cloud database
+    connectTimeout: 60000,
+    acquireTimeout: 60000,
+    reconnect: true
+};
+
+console.log('🔗 Connecting to database:', {
+    host: dbConfig.host,
+    user: dbConfig.user,
+    database: dbConfig.database,
+    port: dbConfig.port
 });
+
+const db = mysql.createConnection(dbConfig);
 
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
@@ -789,10 +802,30 @@ app.post("/api/payments", (req, res) => {
 db.connect((err) => {
   if (err) {
     console.error('❌ MySQL connection failed:', err.message);
-    console.log('⚠️  Please start MAMP MySQL server');
-    console.log('   Database features will be limited');
+    console.log('⚠️  Running in DEMO MODE - using mock data');
+    console.log('   Please configure database environment variables:');
+    console.log('   DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT');
+    
+    // สร้าง mock database object
+    global.dbConnected = false;
+    global.mockData = {
+      users: [
+        { id: 1, Email: 'test@gym.com', Password: '$2b$10$hRw9PuRw2ZQWaE7jpjOl7OpwkFqZ3dYvZQlwXFRRHnvoxH.bcMrGy', fname: 'Test', lname: 'User' },
+        { id: 2, Email: 'admin@gym.com', Password: '$2b$10$hRw9PuRw2ZQWaE7jpjOl7OpwkFqZ3dYvZQlwXFRRHnvoxH.bcMrGy', fname: 'Admin', lname: 'User' }
+      ],
+      members: [
+        { id: 1, firstName: 'John', lastName: 'Doe', age: 25, phone: '0123456789', email: 'john@example.com', duration: 30, originalPrice: 1500.00, points: 0, discount: 0.00, startDate: '2025-01-01', endDate: '2025-01-31', status: 'Active', hasFingerprint: 0 },
+        { id: 2, firstName: 'Jane', lastName: 'Smith', age: 30, phone: '0987654321', email: 'jane@example.com', duration: 60, originalPrice: 2800.00, points: 0, discount: 0.00, startDate: '2025-01-01', endDate: '2025-03-02', status: 'Active', hasFingerprint: 0 }
+      ],
+      payments: [],
+      dailymembers: [],
+      fingerprints: [],
+      scan_logs: [],
+      dailyreports: []
+    };
   } else {
     console.log('✅ Connected to MySQL database');
+    global.dbConnected = true;
   }
 });
 
@@ -1283,16 +1316,27 @@ app.post('/api/login', async (req, res) => {
   }
 
   try {
-      const [rows] = await db.promise().execute(
-          'SELECT * FROM users WHERE LOWER(Email) = LOWER(?)',
-          [Email]
-      );
+      let user;
+      
+      if (!global.dbConnected) {
+          // ใช้ mock data
+          user = global.mockData.users.find(u => u.Email.toLowerCase() === Email.toLowerCase());
+          if (!user) {
+              return res.status(404).json({ status: 'error', message: 'ไม่พบบัญชีผู้ใช้' });
+          }
+      } else {
+          // ใช้ database
+          const [rows] = await db.promise().execute(
+              'SELECT * FROM users WHERE LOWER(Email) = LOWER(?)',
+              [Email]
+          );
 
-      if (rows.length === 0) {
-          return res.status(404).json({ status: 'error', message: 'ไม่พบบัญชีผู้ใช้' });
+          if (rows.length === 0) {
+              return res.status(404).json({ status: 'error', message: 'ไม่พบบัญชีผู้ใช้' });
+          }
+          user = rows[0];
       }
 
-      const user = rows[0];
       console.log('✅ พบผู้ใช้:', user);
 
       // 🔑 ตรวจสอบรหัสผ่าน
