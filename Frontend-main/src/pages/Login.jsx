@@ -12,7 +12,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import LoginIcon from '@mui/icons-material/Login';
 
 function Copyright(props) {
@@ -34,6 +34,10 @@ const defaultTheme = createTheme({
 });
 
 const navigate = useNavigate();
+const location = useLocation();
+
+// เก็บ path ที่ผู้ใช้พยายามเข้าถึงก่อนถูก redirect มา login
+const from = location.state?.from?.pathname || '/home';
 
 const handleSubmit = (event) => {
   event.preventDefault();
@@ -53,9 +57,8 @@ const handleSubmit = (event) => {
     .then(response => response.json())
     .then((data) => {
       if (data.status === 'Ok') {
-        alert('✅ เข้าสู่ระบบสำเร็จ');
         localStorage.setItem('token', data.token);
-        navigate('/home'); // ✅ ใช้ React Router
+        navigate(from, { replace: true }); // ไปยังหน้าที่ผู้ใช้ต้องการเดิม
       } else {
         alert('❌ รหัสผ่าน หรือ Email ไม่ถูกต้อง ! !');
       }

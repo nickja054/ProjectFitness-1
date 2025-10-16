@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -26,17 +26,21 @@ import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import StorageIcon from '@mui/icons-material/Storage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const drawerWidth = 210; // กำหนดความกว้างของ Drawer
-
-const handleLogout = () => {
-  window.location.href = '/Login';
-};
+const drawerWidth = 220; // กำหนดความกว้างของ Drawer
 
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const handleLogout = () => {
+    // ลบ token ออกจาก localStorage
+    localStorage.removeItem('token');
+    // redirect ไปหน้า login
+    navigate('/login');
+  };
 
   if (location.pathname === '/Login' || location.pathname === '/Register') {
     return null;

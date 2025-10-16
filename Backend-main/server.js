@@ -16,26 +16,59 @@ app.use(express.json());
 require('dotenv').config();
 const mysql = require('mysql2');
 
+// ใช้ environment variables สำหรับ production
 const db = mysql.createConnection({
-    uri: process.env.MYSQL_URI, // ใช้ค่า URI จาก .env
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || 'root',
+    database: process.env.DB_NAME || 'gym_management',
+    port: process.env.DB_PORT || 3306
 });
 
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
 const WebSocket = require("ws");
 
-// 🔥 สร้าง WebSocket Server ที่พอร์ต 8080
-const wss = new WebSocket.Server({ port: 8080 });
+// 🔥 สร้าง WebSocket Server ที่พอร์ต 8081 (เปลี่ยนจาก 8080 เพราะ MAMP ใช้แล้ว)
+const wss = new WebSocket.Server({ port: 8081 });
 
 // เปิด Serial Port (เปลี่ยนเป็นพอร์ตที่ใช้งานจริง)
-const serialPort = new SerialPort({
-  path: "COM5", // เปลี่ยนตามพอร์ตของคุณ
-  baudRate: 9600,
-});
+// ปิดการใช้งาน Serial Port ชั่วคราวเพื่อให้ server รันได้โดยไม่ต้องมี hardware
+let serialPort;
+let parser;
 
-const parser = new ReadlineParser();
-serialPort.pipe(parser);
+// ปิด Serial Port บน production (Vercel)
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    serialPort = new SerialPort({
+      path: "COM5", // เปลี่ยนตามพอร์ตของคุณ
+      baudRate: 9600,
+    });
 
+    serialPort.on('open', () => {
+      console.log("✅ Serial Port connected successfully");
+      parser = new ReadlineParser();
+      serialPort.pipe(parser);
+    });
+
+    serialPort.on('error', (err) => {
+      console.log("⚠️  Serial Port error:", err.message);
+      console.log("   Running in demo mode - fingerprint features will be disabled");
+      serialPort = null;
+      parser = null;
+    });
+
+  } catch (error) {
+    console.log("⚠️  Serial Port not available, running in demo mode");
+    console.log("   Fingerprint features will be disabled");
+    serialPort = null;
+    parser = null;
+  }
+} else {
+  console.log("🚀 Running on production - Serial Port disabled");
+}
+
+if (parser) {
 parser.on("data", (data) => {
   const trimmedData = data.trim();
   console.log("📡 Received from Arduino:", trimmedData);
@@ -330,6 +363,7 @@ else if (trimmedData.startsWith("SCAN_SUCCESS:")) {
 }
 
 });
+}
 
 // ✅ ตรวจสอบการเชื่อมต่อ WebSocket
 wss.on("connection", (ws) => {
@@ -625,6 +659,10 @@ app.post("/api/fingerprint/enroll", (req, res) => {
       return res.status(400).json({ message: "Member ID is required." });
   }
 
+  if (!serialPort) {
+      return res.status(503).json({ message: "Fingerprint scanner not available. Running in demo mode." });
+  }
+
   const command = `ENROLL:${memberId}\n`;
   serialPort.write(command, (err) => {
       if (err) {
@@ -656,6 +694,29 @@ app.post("/api/fingerprint/delete", (req, res) => {
 
   if (!memberId) {
       return res.status(400).json({ message: "Member ID is required." });
+  }
+
+  if (!serialPort) {
+      // ถ้าไม่มี serial port ให้ลบข้อมูลจากฐานข้อมูลอย่างเดียว
+      const deleteSql = "DELETE FROM fingerprints WHERE member_id = ?";
+      db.query(deleteSql, [memberId], (err, result) => {
+          if (err) {
+              console.error("❌ Error deleting fingerprint:", err);
+              return res.status(500).json({ error: "Failed to delete fingerprint" });
+          }
+
+          const updateMemberSql = "UPDATE members SET hasFingerprint = 0 WHERE id = ?";
+          db.query(updateMemberSql, [memberId], (err) => {
+              if (err) {
+                  console.error("❌ Error updating member status:", err);
+                  return res.status(500).json({ error: "Failed to update member fingerprint status" });
+              }
+
+              console.log(`✅ ลบลายนิ้วมือสำเร็จสำหรับ Member ID: ${memberId} (Demo mode)`);
+              res.json({ message: "Fingerprint deleted successfully (Demo mode)." });
+          });
+      });
+      return;
   }
 
   // ✅ ค้นหา fingerprint_id ของ memberId
@@ -726,8 +787,13 @@ app.post("/api/payments", (req, res) => {
 });
 
 db.connect((err) => {
-  if (err) throw err;
-  console.log('Connect to Mysql');
+  if (err) {
+    console.error('❌ MySQL connection failed:', err.message);
+    console.log('⚠️  Please start MAMP MySQL server');
+    console.log('   Database features will be limited');
+  } else {
+    console.log('✅ Connected to MySQL database');
+  }
 });
 
 
@@ -1068,6 +1134,10 @@ app.get('/api/members/:id', (req, res) => {
     if (!memberId) {
         return res.status(400).json({ message: "Member ID is required." });
     }
+
+    if (!serialPort) {
+        return res.status(503).json({ message: "Fingerprint scanner not available. Running in demo mode." });
+    }
   
     const command = `ENROLL:${memberId}\n`;
     serialPort.write(command, (err) => {
@@ -1247,6 +1317,5 @@ app.post('/api/login', async (req, res) => {
 
 
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
